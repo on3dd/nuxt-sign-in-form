@@ -18,3 +18,12 @@ $ npm run generate
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+
+## Docker Setup
+```bash
+# build container
+$ docker build -t on3dd.me .
+
+# run container
+$ docker run -p 3000:3000 on3dd.me
+```
