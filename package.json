@@ -13,11 +13,11 @@
   "dependencies": {
     "nuxt": "^2.14.0",
     "vuelidate": "^0.7.5",
-    "@nuxtjs/vuetify": "^1.11.2"
+    "@nuxtjs/vuetify": "^1.11.2",
+    "@nuxtjs/eslint-module": "^2.0.0"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^3.1.0",
-    "@nuxtjs/eslint-module": "^2.0.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.5.0",
     "eslint-config-prettier": "^6.11.0",
