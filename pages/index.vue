@@ -1,95 +1,74 @@
 <template>
-  <v-layout column justify-center align-center>
+  <v-layout justify-center align-center mt-16>
     <v-flex xs12 sm8 md6>
-      <div class="text-center">
-        <logo />
-        <vuetify-logo />
-      </div>
-      <v-card>
-        <v-card-title class="headline">
-          Welcome to the Vuetify + Nuxt.js template
-        </v-card-title>
+      <v-card class="mx-auto" max-width="400" rounded>
+        <v-card-title>Sign in</v-card-title>
         <v-card-text>
-          <p>
-            Vuetify is a progressive Material Design component framework for
-            Vue.js. It was designed to empower developers to create amazing
-            applications.
-          </p>
-          <p>
-            For more information on Vuetify, check out the
-            <a
-              href="https://vuetifyjs.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              documentation </a
-            >.
-          </p>
-          <p>
-            If you have questions, please join the official
-            <a
-              href="https://chat.vuetifyjs.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="chat"
-            >
-              discord </a
-            >.
-          </p>
-          <p>
-            Find a bug? Report it on the github
-            <a
-              href="https://github.com/vuetifyjs/vuetify/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="contribute"
-            >
-              issue board </a
-            >.
-          </p>
-          <p>
-            Thank you for developing with Vuetify and I look forward to bringing
-            more exciting features in the future.
-          </p>
-          <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
-          </div>
-          <hr class="my-3" />
-          <a
-            href="https://nuxtjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt Documentation
-          </a>
-          <br />
-          <a
-            href="https://github.com/nuxt/nuxt.js"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt GitHub
-          </a>
+          <v-form @submit="submit">
+            <v-text-field
+              v-model="login"
+              :error-messages="loginErrors"
+              label="Login"
+              required
+              @input="$v.login.$touch()"
+              @blur="$v.login.$touch()"
+            />
+
+            <v-text-field
+              v-model="password"
+              :error-messages="passwordErrors"
+              label="Password"
+              type="password"
+              required
+              @input="$v.password.$touch()"
+              @blur="$v.password.$touch()"
+            />
+
+            <v-btn class="mt-2" @click="submit">Login</v-btn>
+          </v-form>
         </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn color="primary" nuxt to="/inspire">
-            Continue
-          </v-btn>
-        </v-card-actions>
       </v-card>
     </v-flex>
   </v-layout>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
+import { required } from 'vuelidate/lib/validators';
 
 export default {
-  components: {
-    Logo,
-    VuetifyLogo,
+  data: () => ({
+    login: '',
+    password: '',
+  }),
+  validations: {
+    login: {
+      required,
+    },
+    password: {
+      required,
+    },
   },
-}
+  computed: {
+    loginErrors() {
+      const errors = [];
+      if (!this.$v.login.$dirty) return errors;
+      if (!this.$v.login.required) errors.push('Login is required.');
+      return errors;
+    },
+    passwordErrors() {
+      const errors = [];
+      if (!this.$v.password.$dirty) return errors;
+      if (!this.$v.password.required) errors.push('Password is required.');
+      return errors;
+    },
+  },
+  methods: {
+    submit() {
+      this.$v.$touch();
+      if (!this.$v.$invalid) {
+        this.$router.push('users/mock');
+      }
+    },
+  },
+};
 </script>
