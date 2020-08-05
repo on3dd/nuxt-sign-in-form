@@ -34,12 +34,14 @@
 
 <script>
 import { required } from 'vuelidate/lib/validators';
+import { mockAuth } from '@/mocks/auth';
 
 export default {
   data: () => ({
     login: '',
     password: '',
   }),
+
   validations: {
     login: {
       required,
@@ -48,6 +50,7 @@ export default {
       required,
     },
   },
+
   computed: {
     loginErrors() {
       const errors = [];
@@ -62,11 +65,19 @@ export default {
       return errors;
     },
   },
+
   methods: {
-    submit() {
+    async submit() {
       this.$v.$touch();
+
       if (!this.$v.$invalid) {
-        this.$router.push('users/mock');
+        const data = {
+          login: this.login,
+          password: this.password,
+        };
+
+        await mockAuth(data);
+        await this.$router.push('users/mock');
       }
     },
   },

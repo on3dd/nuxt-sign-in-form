@@ -8,6 +8,6 @@ const mockUser = {
 };
 
 export const getMockUser = async () => {
-  await sleep(500);
+  await sleep(1000);
   return Object.assign({}, mockUser);
 };
